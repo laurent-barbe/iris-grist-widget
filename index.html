@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Saisie financière IRIS</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+</head>
+<body>
+  <header><div><h1>Plateforme IRIS</h1><p>Saisie budgétaire, contrats et ressources RH</p></div><span id="state">Connexion…</span></header>
+  <nav id="tabs">
+    <button data-tab="operation" class="active">Opération</button><button data-tab="compte">Compte</button><button data-tab="contrat">Contrat</button><button data-tab="rh">Contrat ingénieur</button><button data-tab="affectation">Affectation RH</button>
+  </nav>
+  <main>
+    <form id="operation" class="panel active">
+      <h2>Nouvelle recette ou dépense</h2>
+      <div class="grid">
+        <label>Date<input name="Date_operation" type="date" required></label>
+        <label>Type<select name="Type" required><option>Recette</option><option>Dépense</option></select></label>
+        <label>Statut<select name="Statut" required><option>Prévisionnelle</option><option>Facturée</option><option>Disponible</option><option>Engagée</option><option>Réalisée</option></select></label>
+        <label>Compte<select name="Compte" data-source="accounts"><option value="">—</option></select></label>
+        <label>Contrat / prestation<select name="Contrat" data-source="contracts"><option value="">—</option></select></label>
+        <label>Ventilation<select name="Ventilation" required><option>RH / salaires</option><option>Fonctionnement</option><option>Missions</option><option>Investissements</option><option>Maintenance</option><option>Frais de gestion</option><option>Autres</option></select></label>
+        <label>Tiers<input name="Tiers"></label><label>Personne / RH<input name="Personne_RH"></label>
+        <label class="wide">Désignation<input name="Designation" required></label><label>Montant brut (€)<input name="Montant_brut" type="number" min="0" step="0.01" required></label>
+        <label class="wide">Notes<textarea name="Notes"></textarea></label>
+      </div><button class="submit">Enregistrer l’opération</button>
+    </form>
+    <form id="compte" class="panel">
+      <h2>Nouveau compte</h2><div class="grid">
+        <label>Code<input name="Code" required></label><label>Libellé<input name="Libelle" required></label>
+        <label>Type<select name="Type_compte"><option>Compte support</option><option>Compte équipe</option><option>Compte projet</option><option>Autre</option></select></label><label>Responsable<input name="Responsable"></label>
+        <label>Date début<input name="Date_debut" type="date"></label><label>Date fin<input name="Date_fin" type="date"></label><label>Budget total (€)<input name="Budget_total" type="number" step="0.01"></label>
+        <label>Budget RH<input name="Budget_RH" type="number" step="0.01"></label><label>Fonctionnement<input name="Budget_fonctionnement" type="number" step="0.01"></label><label>Missions<input name="Budget_missions" type="number" step="0.01"></label><label>Investissements<input name="Budget_investissements" type="number" step="0.01"></label><label>Maintenance<input name="Budget_maintenance" type="number" step="0.01"></label><label>Frais de gestion<input name="Budget_frais_gestion" type="number" step="0.01"></label><label>Autres<input name="Budget_autres" type="number" step="0.01"></label>
+        <label class="wide">Notes<textarea name="Notes"></textarea></label>
+      </div><button class="submit">Créer le compte</button>
+    </form>
+    <form id="contrat" class="panel">
+      <h2>Nouveau contrat ou prestation</h2><div class="grid">
+        <label>Code<input name="Code" required></label><label>Nom<input name="Libelle" required></label><label>Type<select name="Type_contrat"><option>Prestation industrielle</option><option>Prestation académique interne</option><option>Prestation académique externe</option><option>Collaboration industrielle</option><option>Collaboration académique interne</option><option>Collaboration académique externe</option><option>Subvention</option><option>Investissement</option><option>Autre</option></select></label>
+        <label>Compte de rattachement<select name="Compte" data-source="accounts"><option value="">—</option></select></label><label>Responsable<input name="Responsable"></label><label>Financeur<input name="Financeur"></label><label>État<select name="Etat"><option>En discussion</option><option>En évaluation</option><option>En cours</option><option>En attente</option><option>Fini</option></select></label>
+        <label>Date début<input name="Date_debut" type="date"></label><label>Date fin<input name="Date_fin" type="date"></label><label>Financement total<input name="Financement_total" type="number" step="0.01"></label><label>Part IRIS<input name="Part_IRIS" type="number" step="0.01"></label><label>Part ICube<input name="Part_ICube" type="number" step="0.01"></label><label>Budget total<input name="Budget_total" type="number" step="0.01"></label>
+        <label>Budget RH<input name="Budget_RH" type="number" step="0.01"></label><label>Fonctionnement<input name="Budget_fonctionnement" type="number" step="0.01"></label><label>Missions<input name="Budget_missions" type="number" step="0.01"></label><label>Investissements<input name="Budget_investissements" type="number" step="0.01"></label><label>Maintenance<input name="Budget_maintenance" type="number" step="0.01"></label><label>Frais de gestion<input name="Budget_frais_gestion" type="number" step="0.01"></label><label>Autres<input name="Budget_autres" type="number" step="0.01"></label>
+        <label class="wide">Notes<textarea name="Notes"></textarea></label>
+      </div><button class="submit">Créer le contrat</button>
+    </form>
+    <form id="rh" class="panel">
+      <h2>Nouveau contrat ingénieur</h2><div class="grid">
+        <label>Code RH<input name="Code_RH" required></label><label>Nom<input name="Nom" required></label><label>Prénom<input name="Prenom" required></label><label>Type<select name="Type_contrat"><option>CDD</option><option>CDI</option><option>Doctorant</option><option>Post-doctorant</option><option>Stage</option><option>Vacation</option><option>Mise à disposition</option><option>Autre</option></select></label>
+        <label>Date début<input name="Date_debut" type="date" required></label><label>Date fin<input name="Date_fin" type="date" required></label><label>Coût mensuel chargé<input name="Cout_mensuel" type="number" step="0.01"></label><label>Budget salaire total<input name="Budget_salaire" type="number" step="0.01"></label>
+        <label>Compte financeur<select name="Compte" data-source="accounts"><option value="">—</option></select></label><label>Contrat / projet<select name="Contrat" data-source="contracts"><option value="">—</option></select></label><label>Financeur<input name="Financeur"></label><label>Statut<select name="Statut"><option>Prévisionnel</option><option>En cours</option><option>Suspendu</option><option>Terminé</option></select></label><label class="wide">Notes<textarea name="Notes"></textarea></label>
+      </div><button class="submit">Créer le contrat RH</button>
+    </form>
+    <form id="affectation" class="panel">
+      <h2>Nouvelle affectation RH</h2><div class="grid">
+        <label>Contrat ingénieur<select name="Contrat_RH" data-source="rh"><option value="">—</option></select></label><label>Date début<input name="Date_debut" type="date"></label><label>Date fin<input name="Date_fin" type="date"></label><label>Quotité (%)<input name="Quotite" type="number" min="0" max="100" step="1" value="100"></label>
+        <label>Compte<select name="Compte" data-source="accounts"><option value="">—</option></select></label><label>Contrat / projet<select name="Contrat" data-source="contracts"><option value="">—</option></select></label><label>Budget affecté<input name="Budget_affecte" type="number" step="0.01"></label><label>Coût mensuel affecté<input name="Cout_mensuel_affecte" type="number" step="0.01"></label><label>Statut<select name="Statut"><option>Prévisionnelle</option><option>Active</option><option>Suspendue</option><option>Terminée</option></select></label><label class="wide">Notes<textarea name="Notes"></textarea></label>
+      </div><button class="submit">Créer l’affectation</button>
+    </form>
+    <div id="toast" role="status"></div>
+  </main>
+  <script src="app.js"></script>
+</body></html>
+
